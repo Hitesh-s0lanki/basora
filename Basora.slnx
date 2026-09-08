@@ -1,3 +1,20 @@
 <Solution>
-  <Project Path="Basora/Basora.fsproj" />
+  <Folder Name="/src/">
+    <Project Path="src/Basora.AI/Basora.AI.csproj" />
+    <Project Path="src/Basora.Analytics/Basora.Analytics.csproj" />
+    <Project Path="src/Basora.App/Basora.App.csproj" />
+    <Project Path="src/Basora.Core/Basora.Core.csproj" />
+    <Project Path="src/Basora.Infrastructure/Basora.Infrastructure.csproj" />
+    <Project Path="src/Basora.PostgreSQL/Basora.PostgreSQL.csproj" />
+    <Project Path="src/Basora.Security/Basora.Security.csproj" />
+    <Project Path="src/Basora.UI/Basora.UI.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Basora.Analytics.Tests/Basora.Analytics.Tests.csproj" />
+    <Project Path="tests/Basora.Core.Tests/Basora.Core.Tests.csproj" />
+    <Project Path="tests/Basora.PostgreSQL.Tests/Basora.PostgreSQL.Tests.csproj" />
+    <Project Path="tests/Basora.Security.Tests/Basora.Security.Tests.csproj" />
+    <Project Path="tests/Basora.TestKit/Basora.TestKit.csproj" />
+    <Project Path="tests/Basora.UI.Tests/Basora.UI.Tests.csproj" />
+  </Folder>
 </Solution>

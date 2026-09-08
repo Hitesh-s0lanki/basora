@@ -14,20 +14,19 @@ workspace for Windows, macOS and Linux.
 
 ## Status
 
-> **Pre-alpha — planning complete, implementation not started.**
+> **Pre-alpha — planning complete, implementation just started.**
 >
-> The repository currently contains the original **F# Avalonia scaffold** and a complete
-> [design and task specification](Basora/docs/README.md). The move to the C# multi-project
-> solution is task `T-F01` and has not been performed yet. Nothing described under
-> "Features" below is implemented.
+> The repository contains a complete [design and task specification](docs/README.md) and
+> the empty C# multi-project solution that `T-F01` laid down. Nothing described under
+> "Features" below is implemented yet.
 
 | Area | State |
 |---|---|
-| Product brief | Complete — [`docs/idea.md`](Basora/docs/idea.md) |
+| Product brief | Complete — [`docs/idea.md`](docs/idea.md) |
 | Architecture, design system, specs | Complete — 52 documents |
 | Wireframes | Complete — 24 screens |
 | Task plan | Complete — 73 tasks for MVP 1 |
-| Code | Scaffold only |
+| Code | Solution skeleton — `T-F01` done, `T-F02` next |
 
 ---
 
@@ -113,7 +112,7 @@ documentation generator · Git integration.
 
 *Exit criterion: Basora suggests a fix the user would not have found alone.*
 
-Full detail: [`docs/01-product-overview.md`](Basora/docs/01-product-overview.md) §7.
+Full detail: [`docs/01-product-overview.md`](docs/01-product-overview.md) §7.
 
 ---
 
@@ -131,8 +130,8 @@ Full detail: [`docs/01-product-overview.md`](Basora/docs/01-product-overview.md)
 | Logging | Serilog |
 | Tests | xUnit · Testcontainers · Avalonia.Headless · Verify |
 
-The repository is currently F#; the decision to move to C# is recorded in
-[ADR-0001](Basora/docs/adr/0001-language-and-ui-stack.md).
+The repository started as an F# Avalonia scaffold; the decision to move to C# is recorded
+in [ADR-0001](docs/adr/0001-language-and-ui-stack.md).
 
 ---
 
@@ -158,7 +157,7 @@ Three rules, enforced by architecture tests rather than code review:
 That shape is what makes the whole thing testable without a window or a database — and
 what lets most of the work happen in parallel.
 
-Full detail: [`docs/02-architecture.md`](Basora/docs/02-architecture.md).
+Full detail: [`docs/02-architecture.md`](docs/02-architecture.md).
 
 ---
 
@@ -174,37 +173,38 @@ Full detail: [`docs/02-architecture.md`](Basora/docs/02-architecture.md).
 
 ```bash
 dotnet build
-dotnet run --project Basora/Basora.fsproj
+dotnet run --project src/Basora.App
+dotnet test
 ```
 
-> This currently launches the Avalonia scaffold window. Once `T-F01` lands, the entry
-> point becomes `src/Basora.App`.
+> This currently launches an empty Avalonia window. The real application shell arrives
+> with `T-U03`.
 
 ---
 
 ## Documentation
 
-Everything lives in [`Basora/docs/`](Basora/docs/README.md). Start with the index — it
+Everything lives in [`docs/`](docs/README.md). Start with the index — it
 explains the reading order for planning, coding, building a screen, and reviewing.
 
 | Document | What it covers |
 |---|---|
-| [`idea.md`](Basora/docs/idea.md) | The original product brief — the source of truth for scope |
-| [`01-product-overview.md`](Basora/docs/01-product-overview.md) | Vision, users, differentiators, non-goals |
-| [`02-architecture.md`](Basora/docs/02-architecture.md) | Solution layout, layer rules, MVVM, DI, threading |
-| [`03-tech-stack.md`](Basora/docs/03-tech-stack.md) | Packages, rationale, rejected alternatives |
-| [`04-domain-model.md`](Basora/docs/04-domain-model.md) | Every type in `Basora.Core` |
-| [`05-postgresql-data-layer.md`](Basora/docs/05-postgresql-data-layer.md) | Npgsql, catalog queries, streaming, `COPY`, error mapping |
-| [`06-security-and-credentials.md`](Basora/docs/06-security-and-credentials.md) | Secret storage, SSH, TLS, redaction, audit, AI boundary |
-| [`07-design-system.md`](Basora/docs/07-design-system.md) | Tokens, palettes, density, accessibility, required states |
-| [`08-ux-flows.md`](Basora/docs/08-ux-flows.md) | Nine end-to-end user journeys |
-| [`09-keyboard-map.md`](Basora/docs/09-keyboard-map.md) | Full shortcut map |
-| [`10-safety-rules.md`](Basora/docs/10-safety-rules.md) | The production guard rule engine |
-| [`11-testing-strategy.md`](Basora/docs/11-testing-strategy.md) | Test pyramid, version matrix, performance budgets |
-| [`12-coding-standards.md`](Basora/docs/12-coding-standards.md) | Conventions and Definition of Done |
-| [`13-glossary.md`](Basora/docs/13-glossary.md) | Shared vocabulary |
-| [`wireframes/`](Basora/docs/wireframes/README.md) | 24 self-contained screen specs |
-| [`tasks/`](Basora/docs/tasks/00-task-board.md) | The execution plan |
+| [`idea.md`](docs/idea.md) | The original product brief — the source of truth for scope |
+| [`01-product-overview.md`](docs/01-product-overview.md) | Vision, users, differentiators, non-goals |
+| [`02-architecture.md`](docs/02-architecture.md) | Solution layout, layer rules, MVVM, DI, threading |
+| [`03-tech-stack.md`](docs/03-tech-stack.md) | Packages, rationale, rejected alternatives |
+| [`04-domain-model.md`](docs/04-domain-model.md) | Every type in `Basora.Core` |
+| [`05-postgresql-data-layer.md`](docs/05-postgresql-data-layer.md) | Npgsql, catalog queries, streaming, `COPY`, error mapping |
+| [`06-security-and-credentials.md`](docs/06-security-and-credentials.md) | Secret storage, SSH, TLS, redaction, audit, AI boundary |
+| [`07-design-system.md`](docs/07-design-system.md) | Tokens, palettes, density, accessibility, required states |
+| [`08-ux-flows.md`](docs/08-ux-flows.md) | Nine end-to-end user journeys |
+| [`09-keyboard-map.md`](docs/09-keyboard-map.md) | Full shortcut map |
+| [`10-safety-rules.md`](docs/10-safety-rules.md) | The production guard rule engine |
+| [`11-testing-strategy.md`](docs/11-testing-strategy.md) | Test pyramid, version matrix, performance budgets |
+| [`12-coding-standards.md`](docs/12-coding-standards.md) | Conventions and Definition of Done |
+| [`13-glossary.md`](docs/13-glossary.md) | Shared vocabulary |
+| [`wireframes/`](docs/wireframes/README.md) | 24 self-contained screen specs |
+| [`tasks/`](docs/tasks/00-task-board.md) | The execution plan |
 
 ---
 
@@ -233,8 +233,8 @@ Three rules make that possible:
    tasks append a file rather than edit a shared line.
 
 The critical path is the data-grid chain (`T-D01 → D02 → D03 → D05 → D06`). See
-[`docs/tasks/00-task-board.md`](Basora/docs/tasks/00-task-board.md) for the dependency
-graph, and [`docs/tasks/README.md`](Basora/docs/tasks/README.md) for the card format.
+[`docs/tasks/00-task-board.md`](docs/tasks/00-task-board.md) for the dependency
+graph, and [`docs/tasks/README.md`](docs/tasks/README.md) for the card format.
 
 ### Demoable milestones
 
@@ -251,7 +251,7 @@ graph, and [`docs/tasks/README.md`](Basora/docs/tasks/README.md) for the card fo
 
 ## Contributing
 
-Read [`docs/12-coding-standards.md`](Basora/docs/12-coding-standards.md) before opening a
+Read [`docs/12-coding-standards.md`](docs/12-coding-standards.md) before opening a
 PR, then pick a task whose dependencies have merged.
 
 - Branch: `feat/T-D05-pending-changes`

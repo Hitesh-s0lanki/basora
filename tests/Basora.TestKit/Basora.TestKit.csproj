@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared in-memory fakes for every Basora.Core contract. Not a test project: it is
+       consumed by all of them, and it is what lets feature tasks run in parallel without
+       waiting on each other's implementations. Populated by T-F08. -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Basora.Core\Basora.Core.csproj" />
+  </ItemGroup>
+
+</Project>

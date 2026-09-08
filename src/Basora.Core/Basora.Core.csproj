@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Layer rule 1 (docs/02-architecture.md section 3): Basora.Core references no other
+       Basora project and no UI or data framework. Its only permitted dependency is
+       System.*. Adding a ProjectReference or PackageReference here is an architecture
+       violation, and T-F02 turns that into a build failure. -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>
