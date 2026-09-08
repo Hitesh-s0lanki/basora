@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Entry point and composition root. The only project allowed to reference every
+       module, because it is the only project that wires them together. Nothing
+       references Basora.App (layer rule 5). -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Basora.AI\Basora.AI.csproj" />
+    <ProjectReference Include="..\Basora.Analytics\Basora.Analytics.csproj" />
+    <ProjectReference Include="..\Basora.Core\Basora.Core.csproj" />
+    <ProjectReference Include="..\Basora.Infrastructure\Basora.Infrastructure.csproj" />
+    <ProjectReference Include="..\Basora.PostgreSQL\Basora.PostgreSQL.csproj" />
+    <ProjectReference Include="..\Basora.Security\Basora.Security.csproj" />
+    <ProjectReference Include="..\Basora.UI\Basora.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.2" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.2" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

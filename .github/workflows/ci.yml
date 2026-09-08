@@ -1,10 +1,10 @@
-# Interim CI for the pre-restructure repository.
+# Interim CI for the solution skeleton.
 #
-# This validates what exists today: the Avalonia scaffold builds on all three target
-# platforms, and the documentation's internal links resolve. The full pipeline
-# (format check, architecture tests, Testcontainers integration tests against a
-# PostgreSQL version matrix, headless UI smoke) is task T-F09 and lands once the
-# C# solution exists. See Basora/docs/tasks/epic-00-foundation.md.
+# This validates what exists today: the C# solution builds on all three target
+# platforms, its (currently empty) test projects run, and the documentation's internal
+# links resolve. The full pipeline (format check, architecture tests, Testcontainers
+# integration tests against a PostgreSQL version matrix, headless UI smoke) is task
+# T-F09. See docs/tasks/epic-00-foundation.md.
 
 name: CI
 
