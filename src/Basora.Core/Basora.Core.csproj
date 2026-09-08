@@ -5,10 +5,4 @@
        System.*. Adding a ProjectReference or PackageReference here is an architecture
        violation, and T-F02 turns that into a build failure. -->
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
 </Project>

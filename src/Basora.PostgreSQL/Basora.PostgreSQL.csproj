@@ -3,12 +3,6 @@
   <!-- Layer rule 3: this is the sole owner of NpgsqlConnection. The Npgsql package
        reference lands here and nowhere else, at T-C01. -->
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Basora.Core\Basora.Core.csproj" />
     <ProjectReference Include="..\Basora.Security\Basora.Security.csproj" />

@@ -1,10 +1,10 @@
 # Interim CI for the solution skeleton.
 #
 # This validates what exists today: the C# solution builds on all three target
-# platforms, its (currently empty) test projects run, and the documentation's internal
-# links resolve. The full pipeline (format check, architecture tests, Testcontainers
-# integration tests against a PostgreSQL version matrix, headless UI smoke) is task
-# T-F09. See docs/tasks/epic-00-foundation.md.
+# platforms, the style rules hold, the architecture tests pass, and the documentation's
+# internal links resolve. The full pipeline (Testcontainers integration tests against a
+# PostgreSQL version matrix, headless UI smoke, packaging) is task T-F09.
+# See docs/tasks/epic-00-foundation.md.
 
 name: CI
 
@@ -49,6 +49,9 @@ jobs:
 
       - name: Restore
         run: dotnet restore
+
+      - name: Verify formatting
+        run: dotnet format --verify-no-changes --no-restore
 
       - name: Build (Debug)
         run: dotnet build --configuration Debug --no-restore
