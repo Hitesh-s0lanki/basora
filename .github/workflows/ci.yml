@@ -1,0 +1,107 @@
+# Interim CI for the pre-restructure repository.
+#
+# This validates what exists today: the Avalonia scaffold builds on all three target
+# platforms, and the documentation's internal links resolve. The full pipeline
+# (format check, architecture tests, Testcontainers integration tests against a
+# PostgreSQL version matrix, headless UI smoke) is task T-F09 and lands once the
+# C# solution exists. See Basora/docs/tasks/epic-00-foundation.md.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('**/*.fsproj', '**/*.csproj', '**/Directory.Packages.props') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build (Debug)
+        run: dotnet build --configuration Debug --no-restore
+
+      - name: Build (Release)
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        shell: bash
+        run: |
+          projects=$(git ls-files '*[Tt]ests*.csproj' '*[Tt]ests*.fsproj')
+          if [ -n "$projects" ]; then
+            dotnet test --configuration Release --no-build --verbosity normal
+          else
+            echo "No test projects yet - skipping. Tests arrive with T-F02 and T-F08."
+          fi
+
+  docs:
+    name: Docs link check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check internal markdown links
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, re, sys
+
+          broken, checked = [], 0
+          for root, dirs, files in os.walk('.'):
+              dirs[:] = [d for d in dirs if d not in {'.git', 'bin', 'obj', '.vs'}]
+              for name in files:
+                  if not name.endswith('.md'):
+                      continue
+                  path = os.path.join(root, name)
+                  with open(path, encoding='utf-8') as fh:
+                      text = fh.read()
+                  for match in re.finditer(r'\]\(([^)#][^)]*)\)', text):
+                      link = match.group(1).split('#')[0].strip()
+                      if not link or link.startswith(('http://', 'https://', 'mailto:')):
+                          continue
+                      checked += 1
+                      if not os.path.exists(os.path.normpath(os.path.join(root, link))):
+                          broken.append(f'{path} -> {link}')
+
+          print(f'Checked {checked} internal links.')
+          if broken:
+              print('\nBroken links:')
+              for item in broken:
+                  print(f'  {item}')
+              sys.exit(1)
+          print('All internal links resolve.')
+          PY
