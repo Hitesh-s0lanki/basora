@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
@@ -14,9 +10,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <!--
+      The architecture tests under Architecture/ inspect every shipped assembly, so they
+      need every shipped assembly in their output directory. This is the one place in the
+      repository allowed to reference across layers, including Basora.App: a test that
+      enforces the layer graph has to be able to see all of it.
+    -->
+    <ProjectReference Include="..\..\src\Basora.AI\Basora.AI.csproj" />
+    <ProjectReference Include="..\..\src\Basora.Analytics\Basora.Analytics.csproj" />
+    <ProjectReference Include="..\..\src\Basora.App\Basora.App.csproj" />
+    <ProjectReference Include="..\..\src\Basora.Infrastructure\Basora.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Basora.PostgreSQL\Basora.PostgreSQL.csproj" />
+    <ProjectReference Include="..\..\src\Basora.Security\Basora.Security.csproj" />
+    <ProjectReference Include="..\..\src\Basora.UI\Basora.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <ItemGroup>

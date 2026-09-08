@@ -1,0 +1,92 @@
+<Project>
+
+  <!--
+    Repository-wide build settings. Per docs/03-tech-stack.md section 8 these are set
+    once here and never repeated in a project file.
+  -->
+
+  <PropertyGroup>
+    <!-- Which half of the repository a project lives in. Evaluated from the project
+         name because this file is imported before the project body, so a project's own
+         IsTestProject is not visible yet. -->
+    <IsBasoraTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests')) Or '$(MSBuildProjectName)' == 'Basora.TestKit'">true</IsBasoraTestProject>
+    <IsBasoraSourceProject Condition="'$(IsBasoraTestProject)' != 'true'">true</IsBasoraSourceProject>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsBasoraTestProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <!-- CS1591: public members need XML docs. That rule exists for the Core contracts
+         other people build against (docs/12-coding-standards.md section 2); test fixtures
+         and fakes are read as code, not as an API surface. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!--
+    Layer rules, docs/02-architecture.md section 3, enforced at build time rather than in
+    review. This checks DECLARED references; the architecture tests in
+    tests/Basora.Core.Tests/Architecture check what the compiled IL actually touches.
+    The two catch different mistakes and are both worth having.
+
+    A source project with no entry in the table below is denied every reference, so a new
+    project cannot be added without stating where it sits in the layer graph.
+
+    Note that @(ProjectReference) is transitively expanded by this point, so a project's
+    allowed set must cover everything its references drag in as well. The graph in
+    section 3 is transitively closed, so that costs nothing today and catches the case
+    where a new edge quietly widens what a layer can see.
+  -->
+  <Target Name="BasoraValidateLayerRules"
+          BeforeTargets="CoreCompile"
+          Condition="'$(IsBasoraSourceProject)' == 'true'">
+
+    <PropertyGroup>
+      <_BasoraAllowedRefs>;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.Core'">;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.AI'">;Basora.Core;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.Analytics'">;Basora.Core;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.Infrastructure'">;Basora.Core;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.Security'">;Basora.Core;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.PostgreSQL'">;Basora.Core;Basora.Security;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.UI'">;Basora.Core;Basora.Infrastructure;</_BasoraAllowedRefs>
+      <_BasoraAllowedRefs Condition="'$(MSBuildProjectName)' == 'Basora.App'">;Basora.AI;Basora.Analytics;Basora.Core;Basora.Infrastructure;Basora.PostgreSQL;Basora.Security;Basora.UI;</_BasoraAllowedRefs>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_BasoraBadProjectRef Include="@(ProjectReference->'%(Filename)')"
+                            Condition="!$(_BasoraAllowedRefs.Contains(';%(Filename);'))" />
+
+      <!-- Layer rule 3: Basora.PostgreSQL is the sole owner of the Npgsql driver. -->
+      <_BasoraBadPackageRef Include="@(PackageReference->'%(Identity)')"
+                            Condition="'%(Identity)' != '' And
+                                       '%(PackageReference.IsImplicitlyDefined)' != 'true' And
+                                       $([System.String]::Copy('%(Identity)').StartsWith('Npgsql')) And
+                                       '$(MSBuildProjectName)' != 'Basora.PostgreSQL'" />
+
+      <!-- Layer rule 1: Basora.Core takes no package at all. -->
+      <_BasoraBadPackageRef Include="@(PackageReference->'%(Identity)')"
+                            Condition="'%(Identity)' != '' And
+                                       '%(PackageReference.IsImplicitlyDefined)' != 'true' And
+                                       '$(MSBuildProjectName)' == 'Basora.Core'" />
+    </ItemGroup>
+
+    <Error Condition="'@(_BasoraBadProjectRef)' != ''"
+           Code="BASORA001"
+           Text="Layer rule violation: $(MSBuildProjectName) may not reference @(_BasoraBadProjectRef, ', '). Allowed: '$(_BasoraAllowedRefs.Trim(';'))'. See docs/02-architecture.md section 3." />
+
+    <Error Condition="'@(_BasoraBadPackageRef)' != ''"
+           Code="BASORA002"
+           Text="Layer rule violation: $(MSBuildProjectName) may not take a package reference on @(_BasoraBadPackageRef, ', '). See docs/02-architecture.md section 3." />
+  </Target>
+
+</Project>
