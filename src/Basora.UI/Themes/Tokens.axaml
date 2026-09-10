@@ -49,13 +49,14 @@
         Two families. Monospace carries SQL, every grid cell value, identifiers, type
         names and numbers: proportional digits in a numeric column cannot be scanned.
 
-        Inter arrives through the Avalonia.Fonts.Inter package. JetBrains Mono is named
-        first in the code stack and falls back through the platform monospace faces when
-        it is not installed.
+        Both are bundled rather than assumed. Inter arrives through the
+        Avalonia.Fonts.Inter package; JetBrains Mono ships in Assets/Fonts, so a grid
+        column of numbers lines up on a machine that has neither installed. The platform
+        faces stay in the stack behind them to cover a glyph the bundled face lacks.
     -->
 
     <FontFamily x:Key="font.ui">avares://Avalonia.Fonts.Inter/Assets#Inter, Segoe UI Variable, SF Pro Text, system-ui, $Default</FontFamily>
-    <FontFamily x:Key="font.code">JetBrains Mono, Cascadia Code, SF Mono, Consolas, DejaVu Sans Mono, monospace, $Default</FontFamily>
+    <FontFamily x:Key="font.code">avares://Basora.UI/Assets/Fonts/JetBrainsMono#JetBrains Mono, Cascadia Code, SF Mono, Consolas, DejaVu Sans Mono, monospace, $Default</FontFamily>
 
     <!-- The base UI size, 11 to 16, is a user setting. Every size below is stated at the
          documented default of 13 and rescaled from this one value when the setting
