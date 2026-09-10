@@ -11,9 +11,11 @@ WAVE 0  SERIAL - everything is blocked until this lands
         T-F01 -> T-F02
         2 tasks, ~2 days, 1 person
 
-WAVE 1  CONTRACTS - 7 tracks in parallel
-        T-F03  T-F04  T-F05  T-F06  T-F07  T-U01  T-F09
-        7 tasks, ~3 days
+WAVE 1  CONTRACTS - 3 tracks, one of them a chain
+        T-U01                        independent
+        T-F09                        independent
+        T-F03 -> T-F05, T-F07 -> T-F06 -> T-F04
+        7 tasks, ~4 days, 3 people
 
 WAVE 2  FOUNDATIONS - 12 tracks in parallel
         T-F08  T-F10  T-U02  T-U05  T-S01  T-S02  T-S04
@@ -43,6 +45,17 @@ WAVE 6  MVP-1 HARDENING
 MVP 2 (`T-V*`, `T-N*`) and MVP 3 (`T-AI*`, `T-G*`) are epic-level only until MVP 1
 ships. See [`epic-09-mvp2-mvp3-backlog.md`](epic-09-mvp2-mvp3-backlog.md).
 
+**Wave 1 is a chain, not a fan-out.** The four model tasks were originally written as
+four parallel tracks, and they are not: their contracts reference each other's types.
+`ResultColumn` and `QueryParameter` carry a `PgType`, `QueryResultSet` carries an
+`ExplainPlan` and a `DbObjectRef`, and `IQueryChannel` and `IMetadataChannel` are typed in
+terms of both. Since every PR has to build clean on its own, the order is real:
+`T-F03`, then `T-F05` and `T-F07` together, then `T-F06`, then `T-F04`. Only `T-U01` and
+`T-F09` run alongside from the start.
+
+This is the narrowest part of the plan and the reason section 5 says getting through
+waves 0 and 1 quickly is worth disproportionate effort.
+
 ---
 
 ## 2. Dependency graph (MVP 1)
@@ -52,13 +65,21 @@ T-F01 solution restructure
   |
 T-F02 build infrastructure
   |
-  +--------+--------+--------+--------+--------+--------+
-  |        |        |        |        |        |        |
-T-F03    T-F04    T-F05    T-F06    T-F07    T-U01    T-F09
-results  conn     meta     query    explain  tokens   CI
-  |      models   models   models   +safety    |
-  |        |        |        |        |        |
-  +--------+--------+--------+--------+        |
+  +-----------------------------------+--------+
+  |                                   |        |
+T-F03 results                       T-U01    T-F09
+  |                                 tokens     CI
+  +----------------+                  |        |
+  |                |                  |        |
+T-F05 meta      T-F07 explain+safety  |        |
+  |                |                  |        |
+  +--------+-------+                  |        |
+           |                          |        |
+      T-F06 query                     |        |
+           |                          |        |
+      T-F04 conn                      |        |
+           |                          |        |
+           +--------------------------+        |
                     |                          |
       +-------------+-------------+            +----------+
       |             |             |                       |
@@ -100,15 +121,20 @@ results  conn     meta     query    explain  tokens   CI
 ## 3. Critical path
 
 ```text
-T-F01 -> T-F02 -> T-F06 -> T-F08 -> T-D01 -> T-D02 -> T-D03 -> T-D05 -> T-D06 -> T-Z01
+T-F01 -> T-F02 -> T-F03 -> T-F05 -> T-F06 -> T-F08 -> T-D01 -> T-D02 -> T-D03
+      -> T-D05 -> T-D06 -> T-Z01
 ```
 
-The data-grid chain is the longest. Two consequences worth acting on:
+The data-grid chain is the longest, and wave 1's model chain now sits in front of it.
+Three consequences worth acting on:
 
 1. **Start `T-D01` (the virtualised grid control) as early as wave 2**, before the
    services it will consume exist. It is built against a fake row source, so it can.
 2. If `T-D01` slips, everything else still proceeds — but MVP 1 does not ship. It is the
    task to staff first and watch hardest.
+3. **`T-F05` sits on the critical path and `T-F07` does not**, even though the two are
+   siblings. Both feed `T-F06`, but `T-F05` is the larger of the pair. If only one person
+   is free, they should take `T-F05`.
 
 The safety chain (`T-P01 -> T-P02 -> T-P03`) is the second-longest and is a hard
 prerequisite for shipping *anything* that writes, so it cannot be deferred to the end.

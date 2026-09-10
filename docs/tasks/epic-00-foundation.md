@@ -88,7 +88,7 @@ deliberately boring: its only job is to make the other 63 tasks independent.
 
 **Wave:** 1 | **Size:** S | **Spec:** [04-domain-model](../04-domain-model.md) sections 1–2
 
-**Depends on:** T-F03
+**Depends on:** T-F03, T-F05, T-F06
 **Blocks:** T-C01, T-C02, T-C03, T-S01, T-F08
 
 **Owns:** `src/Basora.Core/Models/Connections/**`,
@@ -115,7 +115,7 @@ deliberately boring: its only job is to make the other 63 tasks independent.
 **Wave:** 1 | **Size:** M | **Spec:** [04-domain-model](../04-domain-model.md) sections 3–4
 
 **Depends on:** T-F03
-**Blocks:** T-E01, T-E02, T-M01, T-M02, T-F08
+**Blocks:** T-E01, T-E02, T-M01, T-M02, T-F04, T-F06, T-F08
 
 **Owns:** `src/Basora.Core/Models/Metadata/**`,
 `src/Basora.Core/Interfaces/Metadata/**`, `tests/Basora.Core.Tests/Metadata/**`
@@ -141,8 +141,8 @@ deliberately boring: its only job is to make the other 63 tasks independent.
 
 **Wave:** 1 | **Size:** M | **Spec:** [04-domain-model](../04-domain-model.md) sections 5–7
 
-**Depends on:** T-F03
-**Blocks:** T-Q01, T-Q04, T-D01, T-D02, T-D05, T-D07, T-F08
+**Depends on:** T-F03, T-F05, T-F07
+**Blocks:** T-Q01, T-Q04, T-D01, T-D02, T-D05, T-D07, T-F04, T-F08
 
 **Owns:** `src/Basora.Core/Models/Query/**`, `src/Basora.Core/Models/Filters/**`,
 `src/Basora.Core/Models/Changes/**`, `src/Basora.Core/Interfaces/Query/**`,
@@ -170,7 +170,7 @@ deliberately boring: its only job is to make the other 63 tasks independent.
 **Wave:** 1 | **Size:** S | **Spec:** [04-domain-model](../04-domain-model.md) sections 9–10
 
 **Depends on:** T-F03
-**Blocks:** T-P01, T-P02, T-P05, T-F08
+**Blocks:** T-P01, T-P02, T-P05, T-F06, T-F08
 
 **Owns:** `src/Basora.Core/Models/Explain/**`, `src/Basora.Core/Models/Safety/**`,
 `src/Basora.Core/Models/Health/**`, `src/Basora.Core/Interfaces/Safety/**`,
