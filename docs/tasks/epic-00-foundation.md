@@ -130,10 +130,10 @@ deliberately boring: its only job is to make the other 63 tasks independent.
 - `SqlIdentifier.Quote` / `QuoteQualified` — the single quoting utility.
 
 **Acceptance**
-- [ ] `QuoteIdentifier` always quotes, doubles embedded quotes, and rejects null bytes.
-- [ ] A property test asserts `Quote` output is a valid PostgreSQL identifier for any
+- [x] `QuoteIdentifier` always quotes, doubles embedded quotes, and rejects null bytes.
+- [x] A property test asserts `Quote` output is a valid PostgreSQL identifier for any
       input string.
-- [ ] `DbObjectRef.QualifiedName` is correct with and without a schema.
+- [x] `DbObjectRef.QualifiedName` is correct with and without a schema.
 
 ---
 
