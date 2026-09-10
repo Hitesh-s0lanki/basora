@@ -1,0 +1,157 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        docs/07-design-system.md section 11: a third variant that maximises borders and
+        drops tints in favour of shape.
+
+        Two rules make this theme different in kind rather than degree.
+
+        Every tint is gone. data.modified.background and its siblings are transparent
+        here, so a modified cell is identified by its border and its icon alone. A wash
+        that is faint enough to sit under text is exactly the signal a user of this theme
+        cannot see, so it is removed rather than strengthened.
+
+        Every border is at full contrast. border.subtle, border.default and border.strong
+        collapse onto one value, because a hierarchy expressed in shades of grey does not
+        survive here. What separates two regions is that there is a line, not how faint
+        it is.
+    -->
+
+    <!-- ======================= Primitives: neutrals ===================== -->
+    <!-- Pure black to pure white. Nothing in between is used for text or borders. -->
+
+    <Color x:Key="gray.0">#000000</Color>
+    <Color x:Key="gray.50">#000000</Color>
+    <Color x:Key="gray.100">#0A0A0A</Color>
+    <Color x:Key="gray.200">#FFFFFF</Color>
+    <Color x:Key="gray.300">#FFFFFF</Color>
+    <Color x:Key="gray.400">#FFFFFF</Color>
+    <Color x:Key="gray.500">#BFBFBF</Color>
+    <Color x:Key="gray.600">#E0E0E0</Color>
+    <Color x:Key="gray.700">#F5F5F5</Color>
+    <Color x:Key="gray.800">#FFFFFF</Color>
+    <Color x:Key="gray.900">#FFFFFF</Color>
+    <Color x:Key="gray.1000">#FFFFFF</Color>
+
+    <Color x:Key="black.pure">#000000</Color>
+
+    <!-- ======================== Primitives: accents ===================== -->
+    <!-- Hues kept, saturation dropped and lightness raised, so each stays identifiable
+         while clearing a very high ratio on black. -->
+
+    <Color x:Key="blue.hc">#6CB6FF</Color>
+    <Color x:Key="green.hc">#4EE07A</Color>
+    <Color x:Key="amber.hc">#FFC933</Color>
+    <Color x:Key="red.hc">#FF7B7B</Color>
+    <Color x:Key="purple.hc">#C7A2FF</Color>
+    <Color x:Key="teal.hc">#4DE0D0</Color>
+
+    <Color x:Key="transparent">#00000000</Color>
+
+    <!-- =========================== Surfaces ============================ -->
+
+    <SolidColorBrush x:Key="surface.background" Color="{StaticResource gray.0}" />
+    <SolidColorBrush x:Key="surface.panel" Color="{StaticResource gray.50}" />
+    <SolidColorBrush x:Key="surface.raised" Color="{StaticResource gray.100}" />
+    <SolidColorBrush x:Key="surface.overlay" Color="{StaticResource black.pure}" Opacity="0.8" />
+    <SolidColorBrush x:Key="surface.inset" Color="{StaticResource gray.100}" />
+
+    <!-- ============================ Borders ============================ -->
+    <!-- All one value on purpose. See the note at the top of this file. -->
+
+    <SolidColorBrush x:Key="border.subtle" Color="{StaticResource gray.200}" />
+    <SolidColorBrush x:Key="border.default" Color="{StaticResource gray.300}" />
+    <SolidColorBrush x:Key="border.strong" Color="{StaticResource gray.400}" />
+    <SolidColorBrush x:Key="border.focus" Color="{StaticResource amber.hc}" />
+
+    <!-- ============================= Text ============================== -->
+
+    <SolidColorBrush x:Key="text.primary" Color="{StaticResource gray.900}" />
+    <SolidColorBrush x:Key="text.secondary" Color="{StaticResource gray.700}" />
+    <SolidColorBrush x:Key="text.tertiary" Color="{StaticResource gray.600}" />
+    <SolidColorBrush x:Key="text.disabled" Color="{StaticResource gray.500}" />
+    <SolidColorBrush x:Key="text.inverse" Color="{StaticResource gray.0}" />
+
+    <!-- Full opacity here. Dimming is the one distinction this theme cannot spend, so
+         NULL is carried by the italic and the badge outline instead. -->
+    <SolidColorBrush x:Key="text.null" Color="{StaticResource gray.600}" />
+
+    <!-- ============================ Accent ============================= -->
+
+    <SolidColorBrush x:Key="accent.default" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="accent.hover" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="accent.pressed" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="accent.subtle" Color="{StaticResource transparent}" />
+
+    <!-- ============================ Status ============================= -->
+    <!-- The text step equals the base step: both already clear a very high ratio on
+         black, and a second shade would only be a dimmer one. -->
+
+    <SolidColorBrush x:Key="status.success" Color="{StaticResource green.hc}" />
+    <SolidColorBrush x:Key="status.success.text" Color="{StaticResource green.hc}" />
+    <SolidColorBrush x:Key="status.success.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="status.warning" Color="{StaticResource amber.hc}" />
+    <SolidColorBrush x:Key="status.warning.text" Color="{StaticResource amber.hc}" />
+    <SolidColorBrush x:Key="status.warning.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="status.danger" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="status.danger.text" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="status.danger.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="status.info" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="status.info.text" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="status.info.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="status.ai" Color="{StaticResource purple.hc}" />
+    <SolidColorBrush x:Key="status.ai.text" Color="{StaticResource purple.hc}" />
+    <SolidColorBrush x:Key="status.ai.background" Color="{StaticResource transparent}" />
+
+    <!-- ========================== Environment =========================== -->
+
+    <SolidColorBrush x:Key="env.local" Color="{StaticResource green.hc}" />
+    <SolidColorBrush x:Key="env.local.text" Color="{StaticResource green.hc}" />
+    <SolidColorBrush x:Key="env.local.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="env.dev" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="env.dev.text" Color="{StaticResource blue.hc}" />
+    <SolidColorBrush x:Key="env.dev.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="env.staging" Color="{StaticResource amber.hc}" />
+    <SolidColorBrush x:Key="env.staging.text" Color="{StaticResource amber.hc}" />
+    <SolidColorBrush x:Key="env.staging.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="env.production" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="env.production.text" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="env.production.background" Color="{StaticResource transparent}" />
+
+    <!-- ========================== Data states =========================== -->
+    <!-- Borders only. Every background here is transparent, by design. -->
+
+    <SolidColorBrush x:Key="data.modified" Color="{StaticResource amber.hc}" />
+    <SolidColorBrush x:Key="data.modified.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="data.inserted" Color="{StaticResource green.hc}" />
+    <SolidColorBrush x:Key="data.inserted.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="data.deleted" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="data.deleted.background" Color="{StaticResource transparent}" />
+
+    <SolidColorBrush x:Key="data.invalid" Color="{StaticResource red.hc}" />
+    <SolidColorBrush x:Key="data.invalid.background" Color="{StaticResource transparent}" />
+
+    <!-- Selection and search hits keep a fill, because there is no border available on a
+         cell that is already outlined by the grid. Raised well above the subtle tints the
+         other themes use. -->
+    <SolidColorBrush x:Key="data.selection" Color="{StaticResource blue.hc}" Opacity="0.35" />
+    <SolidColorBrush x:Key="data.match" Color="{StaticResource amber.hc}" Opacity="0.45" />
+
+    <!-- =========================== Elevation ============================ -->
+
+    <BoxShadows x:Key="elevation.0">none</BoxShadows>
+    <BoxShadows x:Key="elevation.1">none</BoxShadows>
+    <BoxShadows x:Key="elevation.2">none</BoxShadows>
+    <BoxShadows x:Key="elevation.3">none</BoxShadows>
+
+</ResourceDictionary>

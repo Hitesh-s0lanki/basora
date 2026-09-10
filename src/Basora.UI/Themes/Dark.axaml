@@ -1,0 +1,161 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        docs/07-design-system.md sections 3 and 4, dark variant.
+
+        The neutral ramp inverts: gray.0 is still the background extreme and gray.900
+        still the text extreme, so every semantic mapping below is written identically to
+        Light.axaml. That is deliberate. When the two files map the same primitive index
+        to the same semantic name, a reviewer can diff them and see only colour values.
+    -->
+
+    <!-- ======================= Primitives: neutrals ===================== -->
+
+    <Color x:Key="gray.0">#0D1117</Color>
+    <Color x:Key="gray.50">#12171F</Color>
+    <Color x:Key="gray.100">#171D26</Color>
+    <Color x:Key="gray.200">#1F2630</Color>
+    <Color x:Key="gray.300">#2A323D</Color>
+    <Color x:Key="gray.400">#3D4754</Color>
+    <Color x:Key="gray.500">#5A6674</Color>
+    <Color x:Key="gray.600">#7C8899</Color>
+    <Color x:Key="gray.700">#A0AAB8</Color>
+    <Color x:Key="gray.800">#C6CDD6</Color>
+    <Color x:Key="gray.900">#E6EAEF</Color>
+    <Color x:Key="gray.1000">#FFFFFF</Color>
+
+    <Color x:Key="black.pure">#000000</Color>
+
+    <!-- ======================== Primitives: accents ===================== -->
+    <!-- Mirrored: the text step is lighter here, not darker, and the wash is a deep tint
+         rather than a pale one. -->
+
+    <Color x:Key="blue.400">#60A5FA</Color>
+    <Color x:Key="blue.500">#3B82F6</Color>
+    <Color x:Key="blue.950">#172554</Color>
+
+    <Color x:Key="green.400">#4ADE80</Color>
+    <Color x:Key="green.500">#22C55E</Color>
+    <Color x:Key="green.950">#052E16</Color>
+
+    <Color x:Key="amber.400">#FBBF24</Color>
+    <Color x:Key="amber.500">#F59E0B</Color>
+    <Color x:Key="amber.950">#451A03</Color>
+
+    <Color x:Key="red.400">#F87171</Color>
+    <Color x:Key="red.500">#EF4444</Color>
+    <Color x:Key="red.950">#450A0A</Color>
+
+    <Color x:Key="purple.400">#A78BFA</Color>
+    <Color x:Key="purple.500">#8B5CF6</Color>
+    <Color x:Key="purple.950">#2E1065</Color>
+
+    <Color x:Key="teal.400">#2DD4BF</Color>
+    <Color x:Key="teal.500">#14B8A6</Color>
+    <Color x:Key="teal.950">#042F2E</Color>
+
+    <!-- =========================== Surfaces ============================ -->
+    <!-- surface.raised steps up the ramp rather than casting a shadow: a shadow on a
+         near-black background is invisible, so depth here is lightness. -->
+
+    <SolidColorBrush x:Key="surface.background" Color="{StaticResource gray.0}" />
+    <SolidColorBrush x:Key="surface.panel" Color="{StaticResource gray.50}" />
+    <SolidColorBrush x:Key="surface.raised" Color="{StaticResource gray.100}" />
+    <SolidColorBrush x:Key="surface.overlay" Color="{StaticResource black.pure}" Opacity="0.6" />
+    <SolidColorBrush x:Key="surface.inset" Color="{StaticResource black.pure}" Opacity="0.35" />
+
+    <!-- ============================ Borders ============================ -->
+
+    <SolidColorBrush x:Key="border.subtle" Color="{StaticResource gray.200}" />
+    <SolidColorBrush x:Key="border.default" Color="{StaticResource gray.300}" />
+    <SolidColorBrush x:Key="border.strong" Color="{StaticResource gray.400}" />
+    <SolidColorBrush x:Key="border.focus" Color="{StaticResource blue.500}" />
+
+    <!-- ============================= Text ============================== -->
+
+    <SolidColorBrush x:Key="text.primary" Color="{StaticResource gray.900}" />
+    <SolidColorBrush x:Key="text.secondary" Color="{StaticResource gray.700}" />
+    <SolidColorBrush x:Key="text.tertiary" Color="{StaticResource gray.600}" />
+    <SolidColorBrush x:Key="text.disabled" Color="{StaticResource gray.500}" />
+    <SolidColorBrush x:Key="text.inverse" Color="{StaticResource gray.0}" />
+    <!-- Taken from gray.900 rather than gray.800, which its light counterpart uses. At 70%
+         over the amber wash of a search hit, gray.800 composites to 4.48:1 and misses the
+         floor by a hair. A NULL inside a search match is exactly the cell someone is
+         looking at when they hit it. -->
+    <SolidColorBrush x:Key="text.null" Color="{StaticResource gray.900}" Opacity="0.7" />
+
+    <!-- ============================ Accent ============================= -->
+
+    <SolidColorBrush x:Key="accent.default" Color="{StaticResource blue.500}" />
+    <SolidColorBrush x:Key="accent.hover" Color="{StaticResource blue.400}" />
+    <SolidColorBrush x:Key="accent.pressed" Color="{StaticResource blue.400}" />
+    <SolidColorBrush x:Key="accent.subtle" Color="{StaticResource blue.950}" />
+
+    <!-- ============================ Status ============================= -->
+
+    <SolidColorBrush x:Key="status.success" Color="{StaticResource green.500}" />
+    <SolidColorBrush x:Key="status.success.text" Color="{StaticResource green.400}" />
+    <SolidColorBrush x:Key="status.success.background" Color="{StaticResource green.950}" />
+
+    <SolidColorBrush x:Key="status.warning" Color="{StaticResource amber.500}" />
+    <SolidColorBrush x:Key="status.warning.text" Color="{StaticResource amber.400}" />
+    <SolidColorBrush x:Key="status.warning.background" Color="{StaticResource amber.950}" />
+
+    <SolidColorBrush x:Key="status.danger" Color="{StaticResource red.500}" />
+    <SolidColorBrush x:Key="status.danger.text" Color="{StaticResource red.400}" />
+    <SolidColorBrush x:Key="status.danger.background" Color="{StaticResource red.950}" />
+
+    <SolidColorBrush x:Key="status.info" Color="{StaticResource blue.500}" />
+    <SolidColorBrush x:Key="status.info.text" Color="{StaticResource blue.400}" />
+    <SolidColorBrush x:Key="status.info.background" Color="{StaticResource blue.950}" />
+
+    <SolidColorBrush x:Key="status.ai" Color="{StaticResource purple.500}" />
+    <SolidColorBrush x:Key="status.ai.text" Color="{StaticResource purple.400}" />
+    <SolidColorBrush x:Key="status.ai.background" Color="{StaticResource purple.950}" />
+
+    <!-- ========================== Environment =========================== -->
+
+    <SolidColorBrush x:Key="env.local" Color="{StaticResource green.500}" />
+    <SolidColorBrush x:Key="env.local.text" Color="{StaticResource green.400}" />
+    <SolidColorBrush x:Key="env.local.background" Color="{StaticResource green.950}" />
+
+    <SolidColorBrush x:Key="env.dev" Color="{StaticResource blue.500}" />
+    <SolidColorBrush x:Key="env.dev.text" Color="{StaticResource blue.400}" />
+    <SolidColorBrush x:Key="env.dev.background" Color="{StaticResource blue.950}" />
+
+    <SolidColorBrush x:Key="env.staging" Color="{StaticResource amber.500}" />
+    <SolidColorBrush x:Key="env.staging.text" Color="{StaticResource amber.400}" />
+    <SolidColorBrush x:Key="env.staging.background" Color="{StaticResource amber.950}" />
+
+    <SolidColorBrush x:Key="env.production" Color="{StaticResource red.500}" />
+    <SolidColorBrush x:Key="env.production.text" Color="{StaticResource red.400}" />
+    <SolidColorBrush x:Key="env.production.background" Color="{StaticResource red.950}" />
+
+    <!-- ========================== Data states =========================== -->
+
+    <SolidColorBrush x:Key="data.modified" Color="{StaticResource amber.500}" />
+    <SolidColorBrush x:Key="data.modified.background" Color="{StaticResource amber.950}" />
+
+    <SolidColorBrush x:Key="data.inserted" Color="{StaticResource green.500}" />
+    <SolidColorBrush x:Key="data.inserted.background" Color="{StaticResource green.950}" />
+
+    <SolidColorBrush x:Key="data.deleted" Color="{StaticResource red.500}" />
+    <SolidColorBrush x:Key="data.deleted.background" Color="{StaticResource red.950}" />
+
+    <SolidColorBrush x:Key="data.invalid" Color="{StaticResource red.500}" />
+    <SolidColorBrush x:Key="data.invalid.background" Color="{StaticResource red.950}" />
+
+    <SolidColorBrush x:Key="data.selection" Color="{StaticResource blue.500}" Opacity="0.12" />
+    <SolidColorBrush x:Key="data.match" Color="{StaticResource amber.500}" Opacity="0.25" />
+
+    <!-- =========================== Elevation ============================ -->
+    <!-- Present so the token resolves, and flat so nothing draws an invisible shadow.
+         Depth in the dark theme is surface.raised, not elevation. -->
+
+    <BoxShadows x:Key="elevation.0">none</BoxShadows>
+    <BoxShadows x:Key="elevation.1">none</BoxShadows>
+    <BoxShadows x:Key="elevation.2">none</BoxShadows>
+    <BoxShadows x:Key="elevation.3">none</BoxShadows>
+
+</ResourceDictionary>

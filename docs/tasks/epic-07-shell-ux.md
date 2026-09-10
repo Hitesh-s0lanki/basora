@@ -26,12 +26,12 @@ Spec: [07-design-system](../07-design-system.md), [09-keyboard-map](../09-keyboa
 - Theme switching without restart via `DynamicResource`.
 
 **Acceptance**
-- [ ] Every semantic token is defined in **all three** theme dictionaries.
-- [ ] All text/background pairs meet WCAG AA — asserted by a contrast test over the token
+- [x] Every semantic token is defined in **all three** theme dictionaries.
+- [x] All text/background pairs meet WCAG AA — asserted by a contrast test over the token
       table, not by eye.
-- [ ] Theme switches live with no restart and no flicker.
-- [ ] Density switching changes every row height through the single token.
-- [ ] No primitive colour is referenced outside the semantic layer.
+- [x] Theme switches live with no restart and no flicker.
+- [x] Density switching changes every row height through the single token.
+- [x] No primitive colour is referenced outside the semantic layer.
 
 ---
 
