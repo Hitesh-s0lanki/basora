@@ -77,10 +77,10 @@ deliberately boring: its only job is to make the other 63 tasks independent.
   a code, a message template and a remediation hint.
 
 **Acceptance**
-- [ ] `Result<T>` cannot be constructed in an invalid state (success with an error, or
+- [x] `Result<T>` cannot be constructed in an invalid state (success with an error, or
       failure with a value).
-- [ ] Every SQLSTATE in the spec table maps to a code, message and remediation.
-- [ ] An unknown SQLSTATE degrades to a generic code without throwing.
+- [x] Every SQLSTATE in the spec table maps to a code, message and remediation.
+- [x] An unknown SQLSTATE degrades to a generic code without throwing.
 
 ---
 
