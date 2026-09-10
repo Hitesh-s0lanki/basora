@@ -1,0 +1,199 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        docs/07-design-system.md sections 3 and 4, light variant.
+
+        Two layers, and only two. The Color entries are primitives and exist solely to be
+        referenced by the SolidColorBrush entries below them. Screens consume the brushes
+        and never the colours: that is what lets a token be retuned here without touching
+        a single view.
+
+        Every brush defined here is defined in Dark.axaml and HighContrast.axaml too. A
+        token present in one theme and not another is a screen that renders as
+        transparent in the other, which is why the completeness test exists.
+    -->
+
+    <!-- ======================= Primitives: neutrals ===================== -->
+    <!-- The workhorse ramp. 0 is the background extreme and 900 the text extreme, in
+         every theme, so the semantic mapping below reads the same in light and dark. -->
+
+    <Color x:Key="gray.0">#FFFFFF</Color>
+    <Color x:Key="gray.50">#FAFBFC</Color>
+    <Color x:Key="gray.100">#F2F4F7</Color>
+    <Color x:Key="gray.200">#E4E7EC</Color>
+    <Color x:Key="gray.300">#D0D5DD</Color>
+    <Color x:Key="gray.400">#98A2B3</Color>
+    <Color x:Key="gray.500">#667085</Color>
+    <Color x:Key="gray.600">#475467</Color>
+    <Color x:Key="gray.700">#344054</Color>
+    <Color x:Key="gray.800">#1D2939</Color>
+    <Color x:Key="gray.900">#101828</Color>
+    <Color x:Key="gray.1000">#000000</Color>
+
+    <!-- The scrim is black in every theme. gray.1000 inverts with the ramp, so a modal
+         backdrop cannot be built from it without going white in the dark theme. -->
+    <Color x:Key="black.pure">#000000</Color>
+
+    <!-- ======================== Primitives: accents ===================== -->
+    <!--
+        The document gives one step per family. Text needs a second: a 4.5:1 body ratio is
+        not reachable from the mid step of any of these hues on a white surface, and the
+        badge fills need a third. So each family carries a text step, the base step and a
+        wash, and the contrast test checks all three.
+    -->
+
+    <Color x:Key="blue.700">#1D4ED8</Color>
+    <Color x:Key="blue.600">#2563EB</Color>
+    <Color x:Key="blue.50">#EFF6FF</Color>
+
+    <Color x:Key="green.700">#15803D</Color>
+    <Color x:Key="green.600">#16A34A</Color>
+    <Color x:Key="green.50">#F0FDF4</Color>
+
+    <Color x:Key="amber.700">#B45309</Color>
+    <Color x:Key="amber.600">#D97706</Color>
+    <Color x:Key="amber.50">#FFFBEB</Color>
+
+    <Color x:Key="red.700">#B91C1C</Color>
+    <Color x:Key="red.600">#DC2626</Color>
+    <Color x:Key="red.50">#FEF2F2</Color>
+
+    <Color x:Key="purple.700">#6D28D9</Color>
+    <Color x:Key="purple.600">#7C3AED</Color>
+    <Color x:Key="purple.50">#F5F3FF</Color>
+
+    <Color x:Key="teal.700">#0F766E</Color>
+    <Color x:Key="teal.600">#0D9488</Color>
+    <Color x:Key="teal.50">#F0FDFA</Color>
+
+    <!-- =========================== Surfaces ============================ -->
+
+    <SolidColorBrush x:Key="surface.background" Color="{StaticResource gray.0}" />
+    <SolidColorBrush x:Key="surface.panel" Color="{StaticResource gray.50}" />
+    <SolidColorBrush x:Key="surface.raised" Color="{StaticResource gray.0}" />
+    <SolidColorBrush x:Key="surface.overlay" Color="{StaticResource black.pure}" Opacity="0.4" />
+    <SolidColorBrush x:Key="surface.inset" Color="{StaticResource gray.100}" />
+
+    <!-- ============================ Borders ============================ -->
+
+    <SolidColorBrush x:Key="border.subtle" Color="{StaticResource gray.200}" />
+    <SolidColorBrush x:Key="border.default" Color="{StaticResource gray.300}" />
+    <SolidColorBrush x:Key="border.strong" Color="{StaticResource gray.400}" />
+    <SolidColorBrush x:Key="border.focus" Color="{StaticResource blue.600}" />
+
+    <!-- ============================= Text ============================== -->
+
+    <SolidColorBrush x:Key="text.primary" Color="{StaticResource gray.900}" />
+    <SolidColorBrush x:Key="text.secondary" Color="{StaticResource gray.600}" />
+    <SolidColorBrush x:Key="text.tertiary" Color="{StaticResource gray.500}" />
+
+    <!-- Disabled text is exempt from the contrast floor by WCAG 1.4.3, which excludes
+         inactive controls. It is the one text token the contrast test skips, and it says
+         so out loud rather than being quietly absent from the table. -->
+    <SolidColorBrush x:Key="text.disabled" Color="{StaticResource gray.400}" />
+
+    <SolidColorBrush x:Key="text.inverse" Color="{StaticResource gray.0}" />
+
+    <!-- The NULL badge: dimmed and italic, and distinct from an empty string. The
+         document specifies 70% opacity; taken from gray.500 that composites to about
+         2.7:1 and fails. Taken from gray.800 it composites to the same dimmed grey the
+         design intends and clears 4.5:1, so the opacity is kept and the base is darker. -->
+    <SolidColorBrush x:Key="text.null" Color="{StaticResource gray.800}" Opacity="0.7" />
+
+    <!-- ============================ Accent ============================= -->
+
+    <SolidColorBrush x:Key="accent.default" Color="{StaticResource blue.600}" />
+    <SolidColorBrush x:Key="accent.hover" Color="{StaticResource blue.700}" />
+    <SolidColorBrush x:Key="accent.pressed" Color="{StaticResource blue.700}" />
+    <SolidColorBrush x:Key="accent.subtle" Color="{StaticResource blue.50}" />
+
+    <!-- ============================ Status ============================= -->
+    <!--
+        Three tokens per status, because one colour cannot do three jobs. The base is the
+        icon, border and indicator colour and clears the 3:1 floor for a UI glyph. The
+        text step clears 4.5:1 for a sentence. The background is the badge wash the text
+        step sits on.
+
+        Colour is never the only carrier: every status also gets an icon and a label, per
+        section 11.
+    -->
+
+    <SolidColorBrush x:Key="status.success" Color="{StaticResource green.600}" />
+    <SolidColorBrush x:Key="status.success.text" Color="{StaticResource green.700}" />
+    <SolidColorBrush x:Key="status.success.background" Color="{StaticResource green.50}" />
+
+    <SolidColorBrush x:Key="status.warning" Color="{StaticResource amber.600}" />
+    <SolidColorBrush x:Key="status.warning.text" Color="{StaticResource amber.700}" />
+    <SolidColorBrush x:Key="status.warning.background" Color="{StaticResource amber.50}" />
+
+    <SolidColorBrush x:Key="status.danger" Color="{StaticResource red.600}" />
+    <SolidColorBrush x:Key="status.danger.text" Color="{StaticResource red.700}" />
+    <SolidColorBrush x:Key="status.danger.background" Color="{StaticResource red.50}" />
+
+    <SolidColorBrush x:Key="status.info" Color="{StaticResource blue.600}" />
+    <SolidColorBrush x:Key="status.info.text" Color="{StaticResource blue.700}" />
+    <SolidColorBrush x:Key="status.info.background" Color="{StaticResource blue.50}" />
+
+    <!-- Anything a model produced. Always visually distinct from anything a person or the
+         server produced, and never reused for another meaning. -->
+    <SolidColorBrush x:Key="status.ai" Color="{StaticResource purple.600}" />
+    <SolidColorBrush x:Key="status.ai.text" Color="{StaticResource purple.700}" />
+    <SolidColorBrush x:Key="status.ai.background" Color="{StaticResource purple.50}" />
+
+    <!-- ========================== Environment =========================== -->
+    <!--
+        The environment colour appears in exactly four places and nowhere else: the 3px
+        top border on a connection tab, the connection card accent bar, the status-bar
+        connection pill, and a 2px window edge for production only. Spending it anywhere
+        else destroys the one signal that stops someone running a statement on the wrong
+        server.
+    -->
+
+    <SolidColorBrush x:Key="env.local" Color="{StaticResource green.600}" />
+    <SolidColorBrush x:Key="env.local.text" Color="{StaticResource green.700}" />
+    <SolidColorBrush x:Key="env.local.background" Color="{StaticResource green.50}" />
+
+    <SolidColorBrush x:Key="env.dev" Color="{StaticResource blue.600}" />
+    <SolidColorBrush x:Key="env.dev.text" Color="{StaticResource blue.700}" />
+    <SolidColorBrush x:Key="env.dev.background" Color="{StaticResource blue.50}" />
+
+    <SolidColorBrush x:Key="env.staging" Color="{StaticResource amber.600}" />
+    <SolidColorBrush x:Key="env.staging.text" Color="{StaticResource amber.700}" />
+    <SolidColorBrush x:Key="env.staging.background" Color="{StaticResource amber.50}" />
+
+    <SolidColorBrush x:Key="env.production" Color="{StaticResource red.600}" />
+    <SolidColorBrush x:Key="env.production.text" Color="{StaticResource red.700}" />
+    <SolidColorBrush x:Key="env.production.background" Color="{StaticResource red.50}" />
+
+    <!-- ========================== Data states =========================== -->
+    <!--
+        Grid cell and row states. Each has a border as well as a tint, because a tint
+        alone is colour-only meaning and disappears for a colour-blind user and in the
+        high contrast theme.
+    -->
+
+    <SolidColorBrush x:Key="data.modified" Color="{StaticResource amber.600}" />
+    <SolidColorBrush x:Key="data.modified.background" Color="{StaticResource amber.50}" />
+
+    <SolidColorBrush x:Key="data.inserted" Color="{StaticResource green.600}" />
+    <SolidColorBrush x:Key="data.inserted.background" Color="{StaticResource green.50}" />
+
+    <SolidColorBrush x:Key="data.deleted" Color="{StaticResource red.600}" />
+    <SolidColorBrush x:Key="data.deleted.background" Color="{StaticResource red.50}" />
+
+    <SolidColorBrush x:Key="data.invalid" Color="{StaticResource red.600}" />
+    <SolidColorBrush x:Key="data.invalid.background" Color="{StaticResource red.50}" />
+
+    <SolidColorBrush x:Key="data.selection" Color="{StaticResource blue.600}" Opacity="0.12" />
+    <SolidColorBrush x:Key="data.match" Color="{StaticResource amber.600}" Opacity="0.25" />
+
+    <!-- =========================== Elevation ============================ -->
+    <!-- Four levels, no more. In the light theme they are shadows. -->
+
+    <BoxShadows x:Key="elevation.0">none</BoxShadows>
+    <BoxShadows x:Key="elevation.1">0 1 2 0 #0F101828</BoxShadows>
+    <BoxShadows x:Key="elevation.2">0 4 12 0 #1A101828</BoxShadows>
+    <BoxShadows x:Key="elevation.3">0 16 40 0 #2E101828</BoxShadows>
+
+</ResourceDictionary>

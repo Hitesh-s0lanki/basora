@@ -1,0 +1,33 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sty="clr-namespace:Avalonia.Styling;assembly=Avalonia.Base"
+                    xmlns:themes="clr-namespace:Basora.UI.Themes">
+
+    <!--
+        The single entry point. App.axaml includes this one file and nothing else from
+        Themes/, so adding a variant or a density never touches the application.
+
+        Theme switching is live because the semantic tokens live in ThemeDictionaries:
+        changing RequestedThemeVariant swaps the dictionary and every DynamicResource
+        binding repaints in place. Nothing restarts and nothing is rebuilt, which is the
+        reason component dictionaries are forbidden from using StaticResource for colour.
+    -->
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Values that do not depend on the theme: spacing, radius, type scale, fonts. -->
+        <ResourceInclude Source="avares://Basora.UI/Themes/Tokens.axaml" />
+
+        <!-- The starting density. The settings layer replaces this entry at runtime. -->
+        <ResourceInclude Source="avares://Basora.UI/Themes/Density.Default.axaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceInclude x:Key="{x:Static sty:ThemeVariant.Light}"
+                         Source="avares://Basora.UI/Themes/Light.axaml" />
+        <ResourceInclude x:Key="{x:Static sty:ThemeVariant.Dark}"
+                         Source="avares://Basora.UI/Themes/Dark.axaml" />
+        <ResourceInclude x:Key="{x:Static themes:BasoraThemeVariants.HighContrast}"
+                         Source="avares://Basora.UI/Themes/HighContrast.axaml" />
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

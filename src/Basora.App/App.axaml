@@ -3,8 +3,19 @@
              xmlns:ui="clr-namespace:Basora.UI;assembly=Basora.UI"
              x:Class="Basora.App.App"
              RequestedThemeVariant="Default">
-    <!-- "Default" follows the system theme variant. "Dark" or "Light" are the other
-         options. The real token dictionaries land at T-U01. -->
+    <!-- "Default" follows the system theme variant. The user may pin Light, Dark or
+         Basora's High Contrast variant, and the change applies without a restart. -->
+
+    <!-- SHARED FILE PROTOCOL (docs/tasks/README.md section 4, rule 3): this element holds
+         ResourceInclude entries and nothing else. A new control adds one line at the end
+         of the list, so concurrent tasks do not contend for this file. -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Basora.UI/Themes/BasoraTheme.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 
     <Application.DataTemplates>
         <ui:ViewLocator />

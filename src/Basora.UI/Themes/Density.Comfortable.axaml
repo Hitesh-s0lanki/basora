@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        docs/07-design-system.md section 7, Comfortable density.
+
+        One of these three dictionaries is merged at a time and the app swaps which. Every
+        list, tree and grid reads density.row.height; a screen that states a row height of
+        its own is a screen that stops responding to this setting, which is why the
+        document forbids it.
+    -->
+
+    <sys:Double x:Key="density.row.height">32</sys:Double>
+    <sys:Double x:Key="density.tree.row.height">30</sys:Double>
+    <sys:Double x:Key="density.toolbar.height">42</sys:Double>
+    <sys:Double x:Key="density.control.height">34</sys:Double>
+
+</ResourceDictionary>

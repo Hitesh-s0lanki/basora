@@ -1,0 +1,93 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        docs/07-design-system.md sections 5 and 6.
+
+        Everything here is the same in every theme: a gap of 8 pixels is 8 pixels in the
+        dark. Anything whose value depends on the theme lives in Light.axaml, Dark.axaml
+        and HighContrast.axaml instead, and anything that depends on the density lives in
+        Density.*.axaml.
+
+        Token names follow the document exactly, dots included, because those names are
+        the contract every other UI task consumes. Renaming one here silently changes
+        what a screen paints.
+    -->
+
+    <!-- ============================ Spacing ============================ -->
+    <!-- A 4px base. Screens compose from these; a literal margin fails review. -->
+
+    <sys:Double x:Key="space.1">4</sys:Double>
+    <sys:Double x:Key="space.2">8</sys:Double>
+    <sys:Double x:Key="space.3">12</sys:Double>
+    <sys:Double x:Key="space.4">16</sys:Double>
+    <sys:Double x:Key="space.5">20</sys:Double>
+    <sys:Double x:Key="space.6">24</sys:Double>
+    <sys:Double x:Key="space.8">32</sys:Double>
+    <sys:Double x:Key="space.10">40</sys:Double>
+    <sys:Double x:Key="space.12">48</sys:Double>
+
+    <Thickness x:Key="space.1.all">4</Thickness>
+    <Thickness x:Key="space.2.all">8</Thickness>
+    <Thickness x:Key="space.3.all">12</Thickness>
+    <Thickness x:Key="space.4.all">16</Thickness>
+
+    <!-- ============================ Radius ============================= -->
+
+    <CornerRadius x:Key="radius.sm">3</CornerRadius>
+    <CornerRadius x:Key="radius.md">6</CornerRadius>
+    <CornerRadius x:Key="radius.lg">10</CornerRadius>
+    <CornerRadius x:Key="radius.full">9999</CornerRadius>
+
+    <!-- Grid cells have no radius. Named so a cell style states the intent rather than
+         hard-coding a zero. -->
+    <CornerRadius x:Key="radius.none">0</CornerRadius>
+
+    <!-- ========================== Typography =========================== -->
+    <!--
+        Two families. Monospace carries SQL, every grid cell value, identifiers, type
+        names and numbers: proportional digits in a numeric column cannot be scanned.
+
+        Inter arrives through the Avalonia.Fonts.Inter package. JetBrains Mono is named
+        first in the code stack and falls back through the platform monospace faces when
+        it is not installed.
+    -->
+
+    <FontFamily x:Key="font.ui">avares://Avalonia.Fonts.Inter/Assets#Inter, Segoe UI Variable, SF Pro Text, system-ui, $Default</FontFamily>
+    <FontFamily x:Key="font.code">JetBrains Mono, Cascadia Code, SF Mono, Consolas, DejaVu Sans Mono, monospace, $Default</FontFamily>
+
+    <!-- The base UI size, 11 to 16, is a user setting. Every size below is stated at the
+         documented default of 13 and rescaled from this one value when the setting
+         changes, so the whole app moves together. -->
+    <sys:Double x:Key="type.base.size">13</sys:Double>
+
+    <sys:Double x:Key="type.display.size">24</sys:Double>
+    <sys:Double x:Key="type.display.lineheight">32</sys:Double>
+
+    <sys:Double x:Key="type.title.size">18</sys:Double>
+    <sys:Double x:Key="type.title.lineheight">26</sys:Double>
+
+    <sys:Double x:Key="type.heading.size">15</sys:Double>
+    <sys:Double x:Key="type.heading.lineheight">22</sys:Double>
+
+    <sys:Double x:Key="type.body.size">13</sys:Double>
+    <sys:Double x:Key="type.body.lineheight">20</sys:Double>
+
+    <sys:Double x:Key="type.label.size">12</sys:Double>
+    <sys:Double x:Key="type.label.lineheight">16</sys:Double>
+
+    <sys:Double x:Key="type.caption.size">11</sys:Double>
+    <sys:Double x:Key="type.caption.lineheight">16</sys:Double>
+
+    <sys:Double x:Key="type.code.size">13</sys:Double>
+    <sys:Double x:Key="type.code.lineheight">20</sys:Double>
+
+    <sys:Double x:Key="type.code.small.size">12</sys:Double>
+    <sys:Double x:Key="type.code.small.lineheight">18</sys:Double>
+
+    <FontWeight x:Key="type.weight.regular">Normal</FontWeight>
+    <FontWeight x:Key="type.weight.medium">Medium</FontWeight>
+    <FontWeight x:Key="type.weight.semibold">SemiBold</FontWeight>
+
+</ResourceDictionary>

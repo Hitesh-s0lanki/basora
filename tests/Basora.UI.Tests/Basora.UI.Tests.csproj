@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Registers the Avalonia services that resolving a resource URI needs. The theme
+         tests load the real dictionary rather than a copy of it, and that goes through the
+         asset loader. -->
+    <PackageReference Include="Avalonia.Headless" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
